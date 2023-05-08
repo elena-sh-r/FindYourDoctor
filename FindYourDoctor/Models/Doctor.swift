@@ -5,8 +5,6 @@
 //  Created by Elena Sharipova on 07.05.2023.
 //
 
-import Foundation
-
 struct Doctor: Decodable {
     let lst_nm: String
     let frst_nm: String
