@@ -6,22 +6,58 @@
 //
 
 struct Doctor: Decodable {
-    let lst_nm: String
-    let frst_nm: String
-    let med_sch: String
-    let grd_yr: String
-    let pri_spec: String
-    let sec_spec_all: String
-    let telehlth: String
-    let org_nm: String
-    let adr_ln_1: String
-    let adr_ln_2: String
-    let cty: String
-    let st: String
-    let zip: String
-    let phn_numbr: String
+    let lastName: String
+    let firstName: String
+    let medicalSchoolName: String
+    let graduationYear: String
+    let primarySpecialty: String
+    let allSecondarySpecialties: String
+    let organizationLegalName: String
+    let line1StreetAddress: String
+    let line2StreetAddress: String
+    let city: String
+    let state: String
+    let zipCode: String
+    let phoneNumber: String
+    
+    var completeName: String {
+        "\(firstName) \(lastName)"
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case lastName = "lst_nm"
+        case firstName = "frst_nm"
+        case medicalSchoolName = "med_sch"
+        case graduationYear = "grd_yr"
+        case primarySpecialty = "pri_spec"
+        case allSecondarySpecialties = "sec_spec_all"
+        case organizationLegalName = "org_nm"
+        case line1StreetAddress = "adr_ln_1"
+        case line2StreetAddress = "adr_ln_2"
+        case city = "cty"
+        case state = "st"
+        case zipCode = "zip"
+        case phoneNumber = "phn_numbr"
+    }
 }
 
 struct DoctorsApiResponse: Decodable {
     let results: [Doctor]
+}
+
+struct Condition: Codable {
+    let property: String
+    let value: String
+    let compareOperator: String
+    
+    enum CodingKeys: String, CodingKey {
+        case property = "property"
+        case value = "value"
+        case compareOperator = "operator"
+    }
+}
+
+struct ApiRequest: Codable {
+    let conditions: [Condition]
+    let limit: Int
 }
