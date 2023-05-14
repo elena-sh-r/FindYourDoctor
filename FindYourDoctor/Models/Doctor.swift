@@ -63,23 +63,6 @@ struct Doctor: Decodable {
     }
 }
 
-struct Condition: Codable {
-    let property: String
-    let value: String
-    let compareOperator: String
-    
-    enum CodingKeys: String, CodingKey {
-        case property = "property"
-        case value = "value"
-        case compareOperator = "operator"
-    }
-}
-
-struct DoctorsApiRequest: Codable {
-    let conditions: [Condition]
-    let limit: Int
-}
-
 struct State: Decodable {
     let title: String
     let code: String
