@@ -7,151 +7,60 @@
 
 import UIKit
 
-enum Specialty: CaseIterable {
-    case hospitalist
-    case physicianAssistant
-    case optometry
-    case emergencyMedicine
-    case clinicalPsychologist
-    case endocrinology
-    case nephrology
-    case familyPractice
-    case pediatricMedicine
-    case psychiatry
-    case physicalTherapy
-    case dentist
-    case internalMedicine
-    case anesthesiology
-    case chiropractic
-    case dermatology
-    case otolaryngology
-    case neurology
-    case ophthalmology
-    case pulmonaryDiseas
-    case diagnosticRadiology
+enum UserChoise: CaseIterable {
+    case chooseState
     
     var title: String {
         switch self {
-        case .hospitalist:
-            return "Hospitalist"
-        case .physicianAssistant:
-            return "Physician Assistant"
-        case .optometry:
-            return "Optometry"
-        case .emergencyMedicine:
-            return "Emergency Medicine"
-        case .clinicalPsychologist:
-            return "Clinical Psychologist"
-        case .endocrinology:
-            return "Endocrinology"
-        case .nephrology:
-            return "Nephrology"
-        case .familyPractice:
-            return "Family Practice"
-        case .pediatricMedicine:
-            return "Pediatric Medicine"
-        case .psychiatry:
-            return "Psychiatry"
-        case .physicalTherapy:
-            return "Physical Therapy"
-        case .dentist:
-            return "Dentist"
-        case .internalMedicine:
-            return "Internal Medicine"
-        case .anesthesiology:
-            return "Anesthesiology"
-        case .chiropractic:
-            return "Chiropractic"
-        case .dermatology:
-            return "Dermatology"
-        case .otolaryngology:
-            return "Otolaryngology"
-        case .neurology:
-            return "Neurology"
-        case .ophthalmology:
-            return "Ophthalmology"
-        case .pulmonaryDiseas:
-            return "Pulmonary Diseas"
-        case .diagnosticRadiology:
-            return "Diagnostic Radiology"
+        case .chooseState:
+            return "Find a doctor in your state"
         }
-    }
-    
-    var apiValue: String {
-        switch self {
-        case .hospitalist:
-            return "HOSPITALIST"
-        case .physicianAssistant:
-            return "PHYSICIAN ASSISTANT"
-        case .optometry:
-            return "OPTOMETRY"
-        case .emergencyMedicine:
-            return "EMERGENCY MEDICINE"
-        case .clinicalPsychologist:
-            return "CLINICAL PSYCHOLOGIST"
-        case .endocrinology:
-            return "ENDOCRINOLOGY"
-        case .nephrology:
-            return "NEPHROLOGY"
-        case .familyPractice:
-            return "FAMILY PRACTICE"
-        case .pediatricMedicine:
-            return "PEDIATRIC MEDICINE"
-        case .psychiatry:
-            return "PSYCHIATRY"
-        case .physicalTherapy:
-            return "PHYSICAL THERAPY"
-        case .dentist:
-            return "DENTIST"
-        case .internalMedicine:
-            return "INTERNAL MEDICINE"
-        case .anesthesiology:
-            return "ANESTHESIOLOGY"
-        case .chiropractic:
-            return "CHIROPRACTIC"
-        case .dermatology:
-            return "DERMATOLOGY"
-        case .otolaryngology:
-            return "OTOLARYNGOLOGY"
-        case .neurology:
-            return "NEUROLOGY"
-        case .ophthalmology:
-            return "OPHTHALMOLOGY"
-        case .pulmonaryDiseas:
-            return "PULMONARY DISEASE"
-        case .diagnosticRadiology:
-            return "DIAGNOSTIC RADIOLOGY"
-        }
-        
     }
 }
 
-final class MainViewController: UICollectionViewController {
+final class MainViewController: UIViewController {
     
-    private let specialties = Specialty.allCases
-
-    // MARK: UICollectionViewDataSource
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        specialties.count
+    //MARK: Private properties
+    private let userChoises = UserChoise.allCases
+    private let networkManager = NetworkManager.shared
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let statesVC = segue.destination as? StatesListViewController else  { return }
+        statesVC.fetchStates()
     }
+}
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "specialty", for: indexPath)
-        guard let cell = cell as? SpecialtyCell else { return UICollectionViewCell() }
-        cell.specialtyLabel.text = specialties[indexPath.item].title
+// MARK: - UICollectionViewDataSource
+extension MainViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        userChoises.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userСhoice", for: indexPath)
+        guard let cell = cell as? UserChoiseCell else { return UICollectionViewCell() }
+        cell.userChoiseLabel.text = userChoises[indexPath.item].title
+        
         return cell
     }
     
-    // MARK: UICollectionViewDelegate
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let chosenSpecialty = specialties[indexPath.item]
-        performSegue(withIdentifier: "showDoctors", sender: chosenSpecialty)
-    }
+}
 
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let doctorsVC = segue.destination as? DoctorListViewController else  { return }
-        doctorsVC.specialty = sender as? Specialty
-        doctorsVC.fetchDoctors()
+// MARK: UICollectionViewDelegate
+extension MainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let userChoise = userChoises[indexPath.item]
+        
+        switch userChoise {
+        case .chooseState: performSegue(withIdentifier: "chooseState", sender: nil)
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: UIScreen.main.bounds.width - 40, height: 65)
     }
 }
