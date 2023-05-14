@@ -7,7 +7,6 @@
 
 import UIKit
 
-final class SpecialtyCell: UICollectionViewCell {
-    
-    @IBOutlet var specialtyLabel: UILabel!
+final class UserChoiseCell: UICollectionViewCell {
+    @IBOutlet var userChoiseLabel: UILabel!
 }

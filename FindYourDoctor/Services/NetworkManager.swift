@@ -6,14 +6,21 @@
 //
 
 import Foundation
+import Alamofire
 
 enum Link {
     case doctorsAndCliniciansURL
+    case statesURL
+    case stateFlag
     
     var url: URL {
         switch self {
         case .doctorsAndCliniciansURL:
             return URL(string: "https://data.cms.gov/provider-data/api/1/datastore/query/mj5m-pzi6/0")!
+        case .statesURL:
+            return URL(string: "https://countriesnow.space/api/v0.1/countries/states")!
+        case .stateFlag:
+            return URL(string: "https://flagcdn.com/256x192")!
         }
     }
 }
@@ -29,31 +36,45 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchDoctors(with parameters: ApiRequest, to url: URL, completion: @escaping(Result<[Doctor], NetworkError>) -> Void) {
-        guard let encodedJSON = try? JSONEncoder().encode(parameters) else {
-            completion(.failure(.noData))
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = encodedJSON
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data else {
-                completion(.failure(.noData))
-                print(error?.localizedDescription ?? "No error description")
-                return
+    func fetchStates(from url: URL, with data: StatesApiRequest, completion: @escaping(Result<[State], AFError>) -> Void) {
+        AF.request(url, method: .post, parameters: data)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    let states = State.getStates(from: value, and: Link.stateFlag.url.absoluteString)
+                    completion(.success(states))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-
-            do {
-                let doctorsApiResponse = try JSONDecoder().decode(DoctorsApiResponse.self, from: data)
-                completion(.success(doctorsApiResponse.results))
-            } catch {
-                completion(.failure(.decodingError))
+    }
+    
+    func fetchData(from url: String, completion: @escaping(Result<Data, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseData { dataResponse in
+                switch dataResponse.result {
+                case .success(let data):
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-        }.resume()
+    }
+    
+    func fetchDoctors(from url: URL, with data: Parameters, completion: @escaping(Result<[Doctor], AFError>) -> Void) {
+        AF.request(url, method: .post, parameters: data, encoding: JSONEncoding.default)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    let doctors = Doctor.getDoctors(from: value)
+                    completion(.success(doctors))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
     }
 }
 

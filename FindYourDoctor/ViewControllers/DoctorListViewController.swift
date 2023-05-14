@@ -8,13 +8,19 @@
 import UIKit
 
 final class DoctorListViewController: UITableViewController {
+    
+    // MARK: IB Outlets
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
+    // MARK: - Public Properties
+    var state: State!
     var specialty: Specialty!
     
+    // MARK: - Private Properties
     private var doctors: [Doctor] = []
     private let networkManager = NetworkManager.shared
-
+    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,15 +36,17 @@ final class DoctorListViewController: UITableViewController {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         let doctor = doctors[indexPath.row]
         
-        let doctorInfoVC = segue.destination as? DoctorInfoViewController
-        doctorInfoVC?.doctor = doctor
+        guard let doctorInfoVC = segue.destination as? DoctorInfoViewController else { return }
+        doctorInfoVC.doctor = doctor
     }
+}
 
-    // MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
+extension DoctorListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         doctors.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "doctorCell", for: indexPath)
         
@@ -55,24 +63,31 @@ final class DoctorListViewController: UITableViewController {
 // MARK: - Networking
 extension DoctorListViewController {
     func fetchDoctors() {
-        let condition = Condition(
-            property: "pri_spec",
-            value: specialty.apiValue,
-            compareOperator: "="
-        )
+        let parameters: [String: Any] = [
+            "limit" : 20,
+            "conditions": [
+                [
+                    "property" : "pri_spec",
+                    "value": specialty.apiValue,
+                    "compareOperator" : "="
+                ],
+                [
+                    "property" : "st",
+                    "value": state.code,
+                    "compareOperator" : "="
+                ]
+            ]
+        ]
         
-        let apiRequest = ApiRequest(
-            conditions: [condition],
-            limit: 20
-        )
-        
-        networkManager.fetchDoctors(with: apiRequest, to: Link.doctorsAndCliniciansURL.url) { [weak self] result in
+        networkManager.fetchDoctors(from: Link.doctorsAndCliniciansURL.url, with: parameters) { [weak self] result in
+            guard let self else { return }
+            
             switch result {
             case .success(let doctorsFromApi):
-                self?.doctors = doctorsFromApi
+                self.doctors = doctorsFromApi
                 DispatchQueue.main.async {
-                    self?.activityIndicator.stopAnimating()
-                    self?.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 print(error)

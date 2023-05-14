@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C0290452A0E41F5008EA74D /* SpecialtyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0290442A0E41F5008EA74D /* SpecialtyListViewController.swift */; };
+		6C0290482A0E8339008EA74D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6C0290472A0E8339008EA74D /* Alamofire */; };
+		6C02904A2A0E83A5008EA74D /* StatesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0290492A0E83A5008EA74D /* StatesListViewController.swift */; };
 		6C682A072A0BD83D00005C14 /* DoctorListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C682A062A0BD83D00005C14 /* DoctorListViewController.swift */; };
 		6C682A082A0BED8000005C14 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CCFFFCB2A08004A003413D4 /* Main.storyboard */; };
 		6C682A0A2A0BF1F600005C14 /* DoctorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C682A092A0BF1F600005C14 /* DoctorInfoViewController.swift */; };
-		6C9B43C62A0BA8E300930389 /* SpecialtyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B43C52A0BA8E300930389 /* SpecialtyCell.swift */; };
+		6C9B43C62A0BA8E300930389 /* UserChoiseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B43C52A0BA8E300930389 /* UserChoiseCell.swift */; };
 		6CBF37522A0803F700097B70 /* Doctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBF37512A0803F700097B70 /* Doctor.swift */; };
 		6CCFFFC62A08004A003413D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCFFFC52A08004A003413D4 /* AppDelegate.swift */; };
 		6CCFFFC82A08004A003413D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCFFFC72A08004A003413D4 /* SceneDelegate.swift */; };
@@ -21,9 +24,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6C0290442A0E41F5008EA74D /* SpecialtyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialtyListViewController.swift; sourceTree = "<group>"; };
+		6C0290492A0E83A5008EA74D /* StatesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesListViewController.swift; sourceTree = "<group>"; };
 		6C682A062A0BD83D00005C14 /* DoctorListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorListViewController.swift; sourceTree = "<group>"; };
 		6C682A092A0BF1F600005C14 /* DoctorInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorInfoViewController.swift; sourceTree = "<group>"; };
-		6C9B43C52A0BA8E300930389 /* SpecialtyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialtyCell.swift; sourceTree = "<group>"; };
+		6C9B43C52A0BA8E300930389 /* UserChoiseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChoiseCell.swift; sourceTree = "<group>"; };
 		6CBF37512A0803F700097B70 /* Doctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doctor.swift; sourceTree = "<group>"; };
 		6CCFFFC22A08004A003413D4 /* FindYourDoctor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindYourDoctor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CCFFFC52A08004A003413D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C0290482A0E8339008EA74D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,7 +56,7 @@
 		6C9B43C42A0BA88100930389 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6C9B43C52A0BA8E300930389 /* SpecialtyCell.swift */,
+				6C9B43C52A0BA8E300930389 /* UserChoiseCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -89,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				6CCFFFC92A08004A003413D4 /* MainViewController.swift */,
+				6C0290492A0E83A5008EA74D /* StatesListViewController.swift */,
+				6C0290442A0E41F5008EA74D /* SpecialtyListViewController.swift */,
 				6C682A062A0BD83D00005C14 /* DoctorListViewController.swift */,
 				6C682A092A0BF1F600005C14 /* DoctorInfoViewController.swift */,
 			);
@@ -154,6 +162,9 @@
 			dependencies = (
 			);
 			name = FindYourDoctor;
+			packageProductDependencies = (
+				6C0290472A0E8339008EA74D /* Alamofire */,
+			);
 			productName = FindYourDoctor;
 			productReference = 6CCFFFC22A08004A003413D4 /* FindYourDoctor.app */;
 			productType = "com.apple.product-type.application";
@@ -182,6 +193,9 @@
 				Base,
 			);
 			mainGroup = 6CCFFFB92A08004A003413D4;
+			packageReferences = (
+				6C0290462A0E8339008EA74D /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 6CCFFFC32A08004A003413D4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -212,10 +226,12 @@
 				6CCFFFCA2A08004A003413D4 /* MainViewController.swift in Sources */,
 				6CCFFFC62A08004A003413D4 /* AppDelegate.swift in Sources */,
 				6C682A072A0BD83D00005C14 /* DoctorListViewController.swift in Sources */,
-				6C9B43C62A0BA8E300930389 /* SpecialtyCell.swift in Sources */,
+				6C9B43C62A0BA8E300930389 /* UserChoiseCell.swift in Sources */,
 				6CFEE7302A0BA66F005EDFFB /* NetworkManager.swift in Sources */,
 				6CBF37522A0803F700097B70 /* Doctor.swift in Sources */,
+				6C02904A2A0E83A5008EA74D /* StatesListViewController.swift in Sources */,
 				6CCFFFC82A08004A003413D4 /* SceneDelegate.swift in Sources */,
+				6C0290452A0E41F5008EA74D /* SpecialtyListViewController.swift in Sources */,
 				6C682A0A2A0BF1F600005C14 /* DoctorInfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +454,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6C0290462A0E8339008EA74D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6C0290472A0E8339008EA74D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C0290462A0E8339008EA74D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6CCFFFBA2A08004A003413D4 /* Project object */;
 }
