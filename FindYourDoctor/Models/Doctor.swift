@@ -5,7 +5,7 @@
 //  Created by Elena Sharipova on 07.05.2023.
 //
 
-struct Doctor: Decodable {
+struct Doctor {
     let lastName: String
     let firstName: String
     let medicalSchoolName: String
@@ -22,22 +22,6 @@ struct Doctor: Decodable {
     
     var completeName: String {
         "\(firstName) \(lastName)"
-    }
-    
-    init(lastName: String, firstName: String, medicalSchoolName: String, graduationYear: String, primarySpecialty: String, allSecondarySpecialties: String, organizationLegalName: String, line1StreetAddress: String, line2StreetAddress: String, city: String, state: String, zipCode: String, phoneNumber: String) {
-        self.lastName = lastName
-        self.firstName = firstName
-        self.medicalSchoolName = medicalSchoolName
-        self.graduationYear = graduationYear
-        self.primarySpecialty = primarySpecialty
-        self.allSecondarySpecialties = allSecondarySpecialties
-        self.organizationLegalName = organizationLegalName
-        self.line1StreetAddress = line1StreetAddress
-        self.line2StreetAddress = line2StreetAddress
-        self.city = city
-        self.state = state
-        self.zipCode = zipCode
-        self.phoneNumber = phoneNumber
     }
     
     init(from doctorData: [String: Any]) {
